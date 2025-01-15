@@ -37,16 +37,4 @@ if __name__ == '__main__':
             print("Succesfully loaded keys")
     
     agent = A2CAgent(actor, critic, args, env, dataGen)
-    if args['train']:
-        agent.train()
-    else:
-        if args['sampling']:
-            best_R = agent.sampling_batch(args['n_samples'])
-        else:
-            R = agent.test()
-        
-        
-       
-
-
-
+    R = agent.test()
