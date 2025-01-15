@@ -176,6 +176,8 @@ class A2CAgent(object):
             ter = np.zeros(env.batch_size).astype(np.float32)
             decoder_input = static_hidden[:, :, env.n_nodes-1].unsqueeze(2)
             time_step = 0
+            truck_moves = []
+            drone_moves = []
             while time_step < args['decode_len']:
                 terminated = torch.from_numpy(ter.astype(np.float32)).to(device)
                 for j in range(2):
@@ -195,13 +197,23 @@ class A2CAgent(object):
                         idx_drone, prob, logp, last_hh = actor.forward(static_hidden, dynamic_drone, decoder_input, last_hh, 
                                                                      terminated, avail_actions_drone)
                         idx = idx_drone 
-                       
+                    if len(truck_moves) == 0:
+                        truck_moves.append(env.truck_loc[0])
+                        drone_moves.append(env.drone_loc[0])
+                    else:
+                        if truck_moves[-1] != env.truck_loc[0]:
+                            truck_moves.append(env.truck_loc[0])
+                        if drone_moves[-1] != env.drone_loc[0]:
+                            drone_moves.append(env.drone_loc[0])
                     
                     decoder_input =  torch.gather(static_hidden, 2, idx.view(-1, 1, 1).expand(env.batch_size, args['hidden_dim'], 1)).detach()
                 
                 state, avail_actions, ter, time_vec_truck, time_vec_drone = env.step(idx_truck.cpu().numpy(), idx_drone.cpu().numpy(), time_vec_truck, time_vec_drone, ter)
                 time_step += 1
-                
+
+        truck_moves = np.array(truck_moves)
+        drone_moves = np.array(drone_moves)    
+
         R = copy.copy(env.current_time)
         print("finished: ", sum(terminated))
         
@@ -209,9 +221,9 @@ class A2CAgent(object):
                                                                args['n_nodes'])
         fname = 'results/' + fname
         np.savetxt(fname, R)
-        
             
-            
+        print(truck_moves)
+        print(drone_moves)
         actor.train()
         return R.mean()
     
@@ -294,18 +306,3 @@ class A2CAgent(object):
         
         np.savetxt(f'results/best_rewards_list_{sample_size}_samples.txt', best_rewards_list)
         return best_rewards, times 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    

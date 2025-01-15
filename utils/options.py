@@ -8,7 +8,7 @@ def ParseParams():
     parser = argparse.ArgumentParser(description="TSP with Drone")
 
     # Data generation for Training and Testing 
-    parser.add_argument('--n_nodes', default=3, type=int, help="Number of nodes")
+    parser.add_argument('--n_nodes', default=100, type=int, help="Number of nodes")
     parser.add_argument('--R', default = 150, type=int, help="Drone battery life in time units")
     parser.add_argument('--v_t', default = 1, type=int, help="Speed of truck in m/s")
     parser.add_argument('--v_d', default = 2, type=int, help="Speed of drone in m/s")
