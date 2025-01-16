@@ -222,10 +222,8 @@ class A2CAgent(object):
         fname = 'results/' + fname
         np.savetxt(fname, R)
             
-        print(truck_moves)
-        print(drone_moves)
         actor.train()
-        return R.mean()
+        return R.mean(), truck_moves, drone_moves
     
     
 
