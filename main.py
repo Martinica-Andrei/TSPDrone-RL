@@ -43,7 +43,8 @@ def get_total_distance(moves, dist_matrix):
 # ...
 # etc
 # modelul asteapta ca fiecare rand sa fie o noua instanta/problema si fiecare 3 valori formeaza un nod (x, y, demand)
-# nu stiu ce face demand
+# "where x_i y_i d_i represents the x-y coordinate of customer i and demand. All demands are set to be 1.0 for customers. 
+# The last components x_n y_n d_n represents the depot and d_n is set to 0.0 for the depot."
 if __name__ == '__main__':
     args = ParseParams()
     random_seed = args['random_seed']
@@ -90,4 +91,9 @@ if __name__ == '__main__':
                                           71,  5, 17, 83, 79, 10, 66, 12, 93])
     print(get_total_distance(truck_moves_without_drone, dist_matrix))
 
-    print("In concluzie, pe setul de date orase, tsp doar cu camion parcurge o distanta mai mica decat inteligenta artificiala cu drona")
+    print("In concluzie, pe setul de date orase, tsp doar cu camion parcurge o distanta mai mica decat inteligenta artificiala cu drona\n\n")
+
+    print("Miscari camion: ")
+    print(truck_moves + 1)
+    print("Miscari drona: ")
+    print(drone_moves)
