@@ -91,7 +91,7 @@ if __name__ == '__main__':
                                           71,  5, 17, 83, 79, 10, 66, 12, 93])
     print(get_total_distance(truck_moves_without_drone, dist_matrix))
 
-    print("In concluzie, pe setul de date orase, tsp doar cu camion parcurge o distanta mai mica decat inteligenta artificiala cu drona\n\n")
+    print("In concluzie, pe setul de date orase, tsp doar cu camion rezolvat cu gurobi parcurge o distanta mai mica decat inteligenta artificiala cu drona\n\n")
 
     print("Miscari camion: ")
     print(truck_moves + 1)
